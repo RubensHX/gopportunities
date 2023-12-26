@@ -9,5 +9,11 @@ func CreateOpeningHandler(ctx *gin.Context) {
 
 	ctx.BindJSON(&request)
 
-	logger.InfoF("Request recieved: %+v", request)
+	if err := db.Create((&request)).Error; err != nil {
+		logger.ErrorF("Error creating opening: %v", err)
+		ctx.JSON(500, gin.H{
+			"message": "Error creating opening",
+		})
+		return
+	}
 }
