@@ -1,6 +1,9 @@
 package handler
 
 import (
+	"net/http"
+
+	"github.com/RubensHX/gopportunities/schemas"
 	"github.com/gin-gonic/gin"
 )
 
@@ -9,11 +12,26 @@ func CreateOpeningHandler(ctx *gin.Context) {
 
 	ctx.BindJSON(&request)
 
-	if err := db.Create((&request)).Error; err != nil {
-		logger.ErrorF("Error creating opening: %v", err)
-		ctx.JSON(500, gin.H{
-			"message": "Error creating opening",
-		})
+	if err := request.Validate(); err != nil {
+		logger.ErrorF("Error validating request: %v", err)
+		sendError(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
+
+	opening := schemas.Opening{
+		Role:     request.Role,
+		Company:  request.Company,
+		Location: request.Location,
+		Remote:   *request.Remote,
+		Link:     request.Link,
+		Salary:   request.Salary,
+	}
+
+	if err := db.Create((&opening)).Error; err != nil {
+		logger.ErrorF("Error creating opening: %v", err.Error())
+		sendError(ctx, http.StatusInternalServerError, "Error creating opening in database")
+		return
+	}
+
+	sendSuccess(ctx, opening)
 }

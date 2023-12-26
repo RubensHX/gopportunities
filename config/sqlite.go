@@ -32,7 +32,7 @@ func InitializeSqlite() (*gorm.DB, error) {
 		logger.ErrorF("Error initializing sqlite: %v", err)
 		return nil, err
 	}
-	err = db.AutoMigrate(&schemas.Opnening{})
+	err = db.AutoMigrate(&schemas.Opening{})
 	if err != nil {
 		logger.ErrorF("Error migrating sqlite: %v", err)
 		return nil, err
