@@ -1,0 +1,22 @@
+meta {
+  name: Create opening
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3333/api/v1/opening
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "role": "Desenvolvedor pleno",
+    "company": "Prime Results",
+    "location": "Belo Horizonte",
+    "remote": false,
+    "link": "https://linkedin.com/primeresults",
+    "salary": 4321
+  }
+}
