@@ -1,0 +1,21 @@
+meta {
+  name: Update opening
+  type: http
+  seq: 5
+}
+
+put {
+  url: http://localhost:3333/api/v1/opening?id=2
+  body: json
+  auth: none
+}
+
+query {
+  id: 2
+}
+
+body:json {
+  {
+    "role": "Desenvolvedor sênior"
+  }
+}

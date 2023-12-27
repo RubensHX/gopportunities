@@ -1,6 +1,9 @@
 package handler
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/RubensHX/gopportunities/schemas"
+	"github.com/gin-gonic/gin"
+)
 
 func sendError(ctx *gin.Context, code int, msg string) {
 	ctx.Header("Content-Type", "application/json")
@@ -16,4 +19,14 @@ func sendSuccess(ctx *gin.Context, data interface{}) {
 		"code": 200,
 		"data": data,
 	})
+}
+
+type ErrorResponse struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+type SuccessResponse struct {
+	Code int                     `json:"code"`
+	Data schemas.OpeningResponse `json:"data"`
 }
